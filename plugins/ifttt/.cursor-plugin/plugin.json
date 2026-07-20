@@ -1,0 +1,40 @@
+{
+  "name": "ifttt",
+  "displayName": "IFTTT",
+  "version": "1.0.0",
+  "description": "Bring IFTTT automation into the agent: search hundreds of services, build and manage Applets, and run actions and queries without leaving your editor.",
+  "author": {
+    "name": "IFTTT",
+    "email": "channels+cursor@ifttt.com"
+  },
+  "homepage": "https://github.com/IFTTT/ifttt-plugins",
+  "repository": "https://github.com/IFTTT/ifttt-plugins",
+  "license": "MIT",
+  "category": "productivity",
+  "keywords": [
+    "ifttt",
+    "mcp",
+    "model-context-protocol",
+    "automation",
+    "applets",
+    "integrations",
+    "workflow",
+    "smart-home",
+    "notifications",
+    "webhooks",
+    "no-code"
+  ],
+  "tags": [
+    "ifttt",
+    "mcp",
+    "automation",
+    "applets",
+    "integrations",
+    "smart-home",
+    "workflow"
+  ],
+  "logo": "assets/logo.svg",
+  "skills": "./skills/",
+  "rules": "./rules/",
+  "mcpServers": "./.mcp.json"
+}

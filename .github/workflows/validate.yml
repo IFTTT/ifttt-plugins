@@ -1,0 +1,26 @@
+name: Validate plugins
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate plugin structure
+        run: node scripts/validate.mjs
+
+      - name: Check JSON manifests parse
+        run: |
+          for f in server.json plugins/*/.cursor-plugin/plugin.json plugins/*/.mcp.json; do
+            [ -f "$f" ] || continue
+            node -e "JSON.parse(require('fs').readFileSync('$f', 'utf8'))" && echo "ok: $f"
+          done

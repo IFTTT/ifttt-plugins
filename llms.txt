@@ -1,0 +1,28 @@
+# IFTTT Plugins
+
+> Client-side distribution for IFTTT MCP: plugin manifests, skills, rules, and brand assets that connect AI clients to IFTTT's hosted Model Context Protocol server at `ifttt.com/mcp`. The server implementation is closed source and is not in this repository.
+
+## Documentation
+
+- [IFTTT MCP docs](https://ifttt.com/docs/mcp): How the hosted server works and how to connect a client.
+- [Repository README](https://github.com/IFTTT/ifttt-plugins/blob/main/README.md): Repo overview, layout, and install paths.
+- [IFTTT plans](https://ifttt.com/plans): Which features require Pro or Pro+ (Filter Code, for example).
+
+## Manifests
+
+- [Cursor plugin manifest](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/.cursor-plugin/plugin.json): Listing metadata for Cursor's marketplace.
+- [MCP server config](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/.mcp.json): Plain `mcpServers` block any MCP client can reuse.
+- [MCP Registry entry](https://github.com/IFTTT/ifttt-plugins/blob/main/server.json): `server.json` for the [official MCP Registry](https://registry.modelcontextprotocol.io).
+
+## Agent guidance
+
+- [AGENTS.md](https://github.com/IFTTT/ifttt-plugins/blob/main/AGENTS.md): Orientation for coding agents installing from or contributing to this repo.
+- [ifttt-lifecycle rule](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/rules/ifttt-lifecycle.mdc): Always-on guardrails — confirm side effects, discover identifiers instead of guessing, hand auth problems to the user.
+- [ifttt-setup skill](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/skills/ifttt-setup/SKILL.md): Both authentication layers, core IFTTT vocabulary, and a tool overview.
+- [ifttt-build-applet skill](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/skills/ifttt-build-applet/SKILL.md): The Applet build, edit, and test workflow.
+
+## Meta
+
+- [LICENSE](https://github.com/IFTTT/ifttt-plugins/blob/main/LICENSE): MIT.
+- [CONTRIBUTING.md](https://github.com/IFTTT/ifttt-plugins/blob/main/CONTRIBUTING.md): Contribution scope and conventions.
+- [Logo assets](https://github.com/IFTTT/ifttt-plugins/tree/main/plugins/ifttt/assets): Square marketplace logo and theme-adaptive icon.
