@@ -14,9 +14,9 @@ The MCP server itself is hosted by IFTTT and closed source. This repo holds only
 
 Cursor is our launch client — open [cursor.com/marketplace/ifttt](https://cursor.com/marketplace/ifttt) and click **Install**.
 
-Running [OpenClaw](https://openclaw.ai)? Install the skill from [ClawHub](https://clawhub.ai/ifttt/ifttt):
+Running [OpenClaw](https://openclaw.ai)? Install the skill from [ClawHub](https://clawhub.ai/ifttt/ifttt) — available once the first release is published (see [openclaw/README.md](./openclaw/README.md)):
 
-```
+```sh
 openclaw skills install @ifttt/ifttt
 ```
 

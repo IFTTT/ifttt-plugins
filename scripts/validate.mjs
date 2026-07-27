@@ -72,7 +72,13 @@ function parseFrontmatter(content) {
       continue;
     }
     const key = line.slice(0, separator).trim();
-    const value = line.slice(separator + 1).trim();
+    let value = line.slice(separator + 1).trim();
+    if (
+      value.length >= 2 &&
+      ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'")))
+    ) {
+      value = value.slice(1, -1);
+    }
     fields[key] = value;
   }
 
@@ -249,6 +255,10 @@ async function validatePlugin(pluginDir, dirName) {
 
 const openclawSkillNamePattern = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
 
+// Full SemVer 2.0.0 pattern from semver.org, kept inline so the validator stays dependency-free.
+const semverPattern =
+  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
+
 async function validateOpenclawSkills() {
   const openclawRoot = path.join(repoRoot, "openclaw");
   if (!(await pathExists(openclawRoot))) {
@@ -291,7 +301,7 @@ async function validateOpenclawSkills() {
       addError(`${label}: frontmatter name must use 1-64 lowercase letters, numbers, or hyphens.`);
     }
 
-    if (parsed.version && !/^\d+\.\d+\.\d+$/.test(parsed.version)) {
+    if (parsed.version && !semverPattern.test(parsed.version)) {
       addError(`${label}: frontmatter version ("${parsed.version}") must be semver (e.g. 1.0.0).`);
     }
   }

@@ -4,7 +4,7 @@ This directory holds ClawHub-format skills for [OpenClaw](https://openclaw.ai) a
 
 ## Installing (users)
 
-```
+```sh
 openclaw skills install @ifttt/ifttt
 ```
 
@@ -14,7 +14,7 @@ The skill walks the agent through adding the MCP server (`https://ifttt.com/mcp`
 
 Publishing requires membership in the `ifttt` org publisher on ClawHub. First release:
 
-```
+```sh
 npm i -g clawhub
 clawhub login
 clawhub skill publish ./openclaw/ifttt \

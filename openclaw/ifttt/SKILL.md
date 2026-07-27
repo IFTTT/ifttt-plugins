@@ -2,10 +2,7 @@
 name: ifttt
 description: Connect OpenClaw to IFTTT's hosted MCP server and automate hundreds of services — discover triggers and actions, build and manage Applets, and run actions and queries. Use when the user mentions IFTTT, asks what they can automate, or describes an automation like "when X happens, do Y".
 version: 1.0.0
-metadata:
-  openclaw:
-    emoji: "⚡"
-    homepage: https://github.com/IFTTT/ifttt-plugins
+metadata: {"openclaw": {"emoji": "⚡", "homepage": "https://github.com/IFTTT/ifttt-plugins"}}
 ---
 
 # IFTTT
@@ -36,9 +33,10 @@ Add the server to the OpenClaw config:
 }
 ```
 
-Then authenticate:
+Reload so the running process picks up the new server, then authenticate:
 
-```
+```sh
+openclaw mcp reload
 openclaw mcp login ifttt
 ```
 
@@ -75,6 +73,9 @@ Discovery (read-only):
 - `get_steps` — fetch triggers, queries, and actions for one or more services in a single call (preferred)
 - `get_triggers` / `get_queries` / `get_actions` — per-service, per-type variants
 - `my_applets` / `search_applets` / `get_applet` — inspect the user's existing Applets
+
+Connections:
+- `connect_service` — returns a `connect_url` (or `reconnect_url`) for linking a service account; see Authenticating
 
 Applet lifecycle:
 - `create_applet` / `edit_applet` — build or modify an Applet
