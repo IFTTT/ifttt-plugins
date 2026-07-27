@@ -298,7 +298,7 @@ async function validateOpenclawSkills() {
     }
 
     if (parsed.name && !openclawSkillNamePattern.test(parsed.name)) {
-      addError(`${label}: frontmatter name must use 1-64 lowercase letters, numbers, or hyphens.`);
+      addError(`${label}: frontmatter name must be 1-64 characters: lowercase letters/numbers with optional internal hyphens, and must start and end with a letter or number.`);
     }
 
     if (parsed.version && !semverPattern.test(parsed.version)) {
