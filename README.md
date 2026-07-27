@@ -14,7 +14,13 @@ The MCP server itself is hosted by IFTTT and closed source. This repo holds only
 
 Cursor is our launch client — open [cursor.com/marketplace/ifttt](https://cursor.com/marketplace/ifttt) and click **Install**.
 
-Not on Cursor? Any MCP-compatible client can point at the server directly:
+Running [OpenClaw](https://openclaw.ai)? Install the skill from [ClawHub](https://clawhub.ai/ifttt/ifttt):
+
+```
+openclaw skills install @ifttt/ifttt
+```
+
+Not on either? Any MCP-compatible client can point at the server directly:
 
 ```json
 {
@@ -39,6 +45,8 @@ plugins/<name>/
   rules/                       always-on guardrails (.mdc)
   assets/                      logo and icon
   README.md                    user-facing docs
+openclaw/<name>/
+  SKILL.md                     ClawHub-format skill for OpenClaw agents
 server.json                    entry for the official MCP Registry
 llms.txt                       discovery index for LLM crawlers
 scripts/validate.mjs           structure checks (run in CI)

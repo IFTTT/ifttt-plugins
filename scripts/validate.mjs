@@ -247,6 +247,56 @@ async function validatePlugin(pluginDir, dirName) {
   }
 }
 
+const openclawSkillNamePattern = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
+
+async function validateOpenclawSkills() {
+  const openclawRoot = path.join(repoRoot, "openclaw");
+  if (!(await pathExists(openclawRoot))) {
+    return;
+  }
+
+  const entries = await fs.readdir(openclawRoot, { withFileTypes: true });
+  const skillDirs = entries.filter((entry) => entry.isDirectory());
+  if (skillDirs.length === 0) {
+    addWarning("openclaw/ exists but contains no skill directories.");
+    return;
+  }
+
+  for (const entry of skillDirs) {
+    const label = `openclaw/${entry.name}`;
+    const skillPath = path.join(openclawRoot, entry.name, "SKILL.md");
+    if (!(await pathExists(skillPath))) {
+      addError(`${label}: ClawHub skill directory is missing SKILL.md.`);
+      continue;
+    }
+
+    const content = await fs.readFile(skillPath, "utf8");
+    const parsed = parseFrontmatter(content);
+    if (!parsed) {
+      addError(`${label}: SKILL.md is missing YAML frontmatter.`);
+      continue;
+    }
+
+    for (const key of ["name", "description", "version"]) {
+      if (!parsed[key] || parsed[key].length === 0) {
+        addError(`${label}: SKILL.md frontmatter is missing "${key}".`);
+      }
+    }
+
+    if (parsed.name && parsed.name !== entry.name) {
+      addError(`${label}: frontmatter name ("${parsed.name}") must match the skill directory name.`);
+    }
+
+    if (parsed.name && !openclawSkillNamePattern.test(parsed.name)) {
+      addError(`${label}: frontmatter name must use 1-64 lowercase letters, numbers, or hyphens.`);
+    }
+
+    if (parsed.version && !/^\d+\.\d+\.\d+$/.test(parsed.version)) {
+      addError(`${label}: frontmatter version ("${parsed.version}") must be semver (e.g. 1.0.0).`);
+    }
+  }
+}
+
 async function validateRegistryManifest() {
   const serverJsonPath = path.join(repoRoot, "server.json");
   if (!(await pathExists(serverJsonPath))) {
@@ -290,6 +340,7 @@ async function main() {
     await validatePlugin(path.join(pluginsRoot, entry.name), entry.name);
   }
 
+  await validateOpenclawSkills();
   await validateRegistryManifest();
 
   summarizeAndExit();
