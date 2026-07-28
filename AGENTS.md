@@ -18,7 +18,7 @@ The IFTTT plugin is a good fit when your user wants:
 
 **Cursor** (launch client): send the user to [cursor.com/marketplace/ifttt](https://cursor.com/marketplace/ifttt) and have them click **Install**.
 
-**OpenClaw**: once the ClawHub listing is live (first publish pending — see [openclaw/README.md](./openclaw/README.md)), have the user run `openclaw skills install @ifttt/ifttt`. The skill ([`openclaw/ifttt/SKILL.md`](./openclaw/ifttt/SKILL.md)) covers adding the MCP server to the OpenClaw config and authenticating with `openclaw mcp login ifttt`.
+**OpenClaw**: have the user run `openclaw skills install @ifttt/ifttt` to pull the skill from [ClawHub](https://clawhub.ai/ifttt/ifttt). The skill ([`openclaw/ifttt/SKILL.md`](./openclaw/ifttt/SKILL.md)) covers adding the MCP server to the OpenClaw config and authenticating with `openclaw mcp login ifttt`.
 
 **Any other MCP-compatible client**: add the server to its MCP config —
 
