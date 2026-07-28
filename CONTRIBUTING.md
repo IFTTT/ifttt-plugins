@@ -10,6 +10,10 @@ The MCP server itself is not developed here. Problems with tool behavior, the se
 2. Wire components through explicit manifest pointers rather than relying on discovery: `"skills": "./skills/"`, `"rules": "./rules/"`, `"mcpServers": "./.mcp.json"`, `"logo": "assets/logo.svg"`.
 3. Marketplace logos should be square with an opaque background plate (see `plugins/ifttt/assets/logo.svg`).
 
+## The OpenClaw skill
+
+`openclaw/<name>/` holds ClawHub-format skills for [OpenClaw](https://openclaw.ai), one folder per skill. Each folder needs a `SKILL.md` whose frontmatter declares `name` (matching the directory name, lowercase letters/numbers/hyphens), `description`, and `version` (semver). The validator checks all three. Keep the skill's guidance in sync with the Cursor plugin's skills and rules — it is the same content restructured into ClawHub's single-file format. Publishing is a manual maintainer step; see [openclaw/README.md](./openclaw/README.md).
+
 ## Validation
 
 ```

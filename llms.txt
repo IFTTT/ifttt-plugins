@@ -20,6 +20,7 @@
 - [ifttt-lifecycle rule](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/rules/ifttt-lifecycle.mdc): Always-on guardrails — confirm side effects, discover identifiers instead of guessing, hand auth problems to the user.
 - [ifttt-setup skill](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/skills/ifttt-setup/SKILL.md): Both authentication layers, core IFTTT vocabulary, and a tool overview.
 - [ifttt-build-applet skill](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/skills/ifttt-build-applet/SKILL.md): The Applet build, edit, and test workflow.
+- [OpenClaw skill](https://github.com/IFTTT/ifttt-plugins/blob/main/openclaw/ifttt/SKILL.md): ClawHub-format skill for OpenClaw agents — setup, auth, concepts, workflow, and guardrails in one file. Publishes to [clawhub.ai/ifttt/ifttt](https://clawhub.ai/ifttt/ifttt) (first release pending).
 
 ## Meta
 

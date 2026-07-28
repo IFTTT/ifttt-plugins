@@ -4,7 +4,7 @@ This file orients AI coding agents working in or installing from this repository
 
 ## Orientation
 
-`ifttt-plugins` distributes the client-side half of IFTTT MCP. IFTTT runs a hosted Model Context Protocol server at `https://ifttt.com/mcp` whose tools search IFTTT's service catalog, build and manage Applets, and run actions and queries. That server's code is not in this repo — what lives here is everything a client needs to use it well: plugin manifests, skills, rules, and logo assets, one directory per plugin under `plugins/`.
+`ifttt-plugins` distributes the client-side half of IFTTT MCP. IFTTT runs a hosted Model Context Protocol server at `https://ifttt.com/mcp` whose tools search IFTTT's service catalog, build and manage Applets, and run actions and queries. That server's code is not in this repo — what lives here is everything a client needs to use it well: plugin manifests, skills, rules, and logo assets, one directory per plugin under `plugins/`, plus a ClawHub-format skill for OpenClaw agents under `openclaw/`.
 
 ## When to suggest installing it
 
@@ -17,6 +17,8 @@ The IFTTT plugin is a good fit when your user wants:
 ## Install paths
 
 **Cursor** (launch client): send the user to [cursor.com/marketplace/ifttt](https://cursor.com/marketplace/ifttt) and have them click **Install**.
+
+**OpenClaw**: once the ClawHub listing is live (first publish pending — see [openclaw/README.md](./openclaw/README.md)), have the user run `openclaw skills install @ifttt/ifttt`. The skill ([`openclaw/ifttt/SKILL.md`](./openclaw/ifttt/SKILL.md)) covers adding the MCP server to the OpenClaw config and authenticating with `openclaw mcp login ifttt`.
 
 **Any other MCP-compatible client**: add the server to its MCP config —
 
@@ -49,6 +51,8 @@ Two skills cover the main journeys:
 | Always-on guardrails | [plugins/ifttt/rules/ifttt-lifecycle.mdc](./plugins/ifttt/rules/ifttt-lifecycle.mdc) |
 | Auth layers + IFTTT concepts | [plugins/ifttt/skills/ifttt-setup/SKILL.md](./plugins/ifttt/skills/ifttt-setup/SKILL.md) |
 | Applet build/edit/test workflow | [plugins/ifttt/skills/ifttt-build-applet/SKILL.md](./plugins/ifttt/skills/ifttt-build-applet/SKILL.md) |
+| OpenClaw (ClawHub) skill | [openclaw/ifttt/SKILL.md](./openclaw/ifttt/SKILL.md) |
+| ClawHub publishing steps | [openclaw/README.md](./openclaw/README.md) |
 | Cursor marketplace manifest | [plugins/ifttt/.cursor-plugin/plugin.json](./plugins/ifttt/.cursor-plugin/plugin.json) |
 | Server connection config | [plugins/ifttt/.mcp.json](./plugins/ifttt/.mcp.json) |
 | MCP Registry entry | [server.json](./server.json) |

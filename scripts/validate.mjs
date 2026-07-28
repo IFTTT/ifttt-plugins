@@ -72,7 +72,13 @@ function parseFrontmatter(content) {
       continue;
     }
     const key = line.slice(0, separator).trim();
-    const value = line.slice(separator + 1).trim();
+    let value = line.slice(separator + 1).trim();
+    if (
+      value.length >= 2 &&
+      ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'")))
+    ) {
+      value = value.slice(1, -1);
+    }
     fields[key] = value;
   }
 
@@ -247,6 +253,60 @@ async function validatePlugin(pluginDir, dirName) {
   }
 }
 
+const openclawSkillNamePattern = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
+
+// Full SemVer 2.0.0 pattern from semver.org, kept inline so the validator stays dependency-free.
+const semverPattern =
+  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
+
+async function validateOpenclawSkills() {
+  const openclawRoot = path.join(repoRoot, "openclaw");
+  if (!(await pathExists(openclawRoot))) {
+    return;
+  }
+
+  const entries = await fs.readdir(openclawRoot, { withFileTypes: true });
+  const skillDirs = entries.filter((entry) => entry.isDirectory());
+  if (skillDirs.length === 0) {
+    addWarning("openclaw/ exists but contains no skill directories.");
+    return;
+  }
+
+  for (const entry of skillDirs) {
+    const label = `openclaw/${entry.name}`;
+    const skillPath = path.join(openclawRoot, entry.name, "SKILL.md");
+    if (!(await pathExists(skillPath))) {
+      addError(`${label}: ClawHub skill directory is missing SKILL.md.`);
+      continue;
+    }
+
+    const content = await fs.readFile(skillPath, "utf8");
+    const parsed = parseFrontmatter(content);
+    if (!parsed) {
+      addError(`${label}: SKILL.md is missing YAML frontmatter.`);
+      continue;
+    }
+
+    for (const key of ["name", "description", "version"]) {
+      if (!parsed[key] || parsed[key].length === 0) {
+        addError(`${label}: SKILL.md frontmatter is missing "${key}".`);
+      }
+    }
+
+    if (parsed.name && parsed.name !== entry.name) {
+      addError(`${label}: frontmatter name ("${parsed.name}") must match the skill directory name.`);
+    }
+
+    if (parsed.name && !openclawSkillNamePattern.test(parsed.name)) {
+      addError(`${label}: frontmatter name must be 1-64 characters: lowercase letters/numbers with optional internal hyphens, and must start and end with a letter or number.`);
+    }
+
+    if (parsed.version && !semverPattern.test(parsed.version)) {
+      addError(`${label}: frontmatter version ("${parsed.version}") must be semver (e.g. 1.0.0).`);
+    }
+  }
+}
+
 async function validateRegistryManifest() {
   const serverJsonPath = path.join(repoRoot, "server.json");
   if (!(await pathExists(serverJsonPath))) {
@@ -290,6 +350,7 @@ async function main() {
     await validatePlugin(path.join(pluginsRoot, entry.name), entry.name);
   }
 
+  await validateOpenclawSkills();
   await validateRegistryManifest();
 
   summarizeAndExit();
