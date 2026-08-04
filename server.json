@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "com.ifttt/mcp",
   "title": "IFTTT MCP server",
-  "description": "IFTTT's hosted MCP server. Gives AI assistants automation across hundreds of services: catalog search, Applet creation and management, and direct actions and queries.",
-  "websiteUrl": "https://ifttt.com/docs/mcp",
+  "description": "Automate 1,000+ services from any MCP-compatible AI agent: build Applets, run actions and queries.",
+  "websiteUrl": "https://ifttt.com/mcp",
   "repository": {
     "url": "https://github.com/IFTTT/ifttt-plugins",
     "source": "github"

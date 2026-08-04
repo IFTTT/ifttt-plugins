@@ -44,6 +44,6 @@ Automate the services you use every day — Gmail, Google Sheets, Slack, Philips
 
 ## Documentation & support
 
-- [ifttt.com/docs/mcp](https://ifttt.com/docs/mcp): IFTTT MCP documentation
+- [ifttt.com/mcp](https://ifttt.com/mcp): IFTTT MCP product page
 - [ifttt.com/plans](https://ifttt.com/plans): plan tiers and features
 - [help.ifttt.com](https://help.ifttt.com): support
