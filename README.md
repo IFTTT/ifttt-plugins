@@ -58,5 +58,5 @@ Run `node scripts/validate.mjs` before opening a PR — CI runs the same checks.
 
 ## Links
 
-- IFTTT MCP documentation: [ifttt.com/docs/mcp](https://ifttt.com/docs/mcp)
+- IFTTT MCP: [ifttt.com/mcp](https://ifttt.com/mcp)
 - Model Context Protocol: [modelcontextprotocol.io](https://modelcontextprotocol.io)

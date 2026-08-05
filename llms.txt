@@ -4,7 +4,7 @@
 
 ## Documentation
 
-- [IFTTT MCP docs](https://ifttt.com/docs/mcp): How the hosted server works and how to connect a client.
+- [IFTTT MCP](https://ifttt.com/mcp): The hosted server's product page — what it does and how to connect a client.
 - [Repository README](https://github.com/IFTTT/ifttt-plugins/blob/main/README.md): Repo overview, layout, and install paths.
 - [IFTTT plans](https://ifttt.com/plans): Which features require Pro or Pro+ (Filter Code, for example).
 
