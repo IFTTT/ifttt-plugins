@@ -325,6 +325,16 @@ async function validateRegistryManifest() {
     }
   }
 
+  if (typeof manifest.description === "string" && manifest.description.length > 100) {
+    addError(
+      `server.json "description" is ${manifest.description.length} characters; the registry schema caps it at 100.`,
+    );
+  }
+
+  if (typeof manifest.version === "string" && !semverPattern.test(manifest.version)) {
+    addError(`server.json "version" ("${manifest.version}") must be semver (e.g. 1.0.0).`);
+  }
+
   if (!Array.isArray(manifest.remotes) || manifest.remotes.length === 0) {
     addError('server.json "remotes" must be a non-empty array.');
   }
