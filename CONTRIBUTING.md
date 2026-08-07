@@ -14,6 +14,12 @@ The MCP server itself is not developed here. Problems with tool behavior, the se
 
 `openclaw/<name>/` holds ClawHub-format skills for [OpenClaw](https://openclaw.ai), one folder per skill. Each folder needs a `SKILL.md` whose frontmatter declares `name` (matching the directory name, lowercase letters/numbers/hyphens), `description`, and `version` (semver). The validator checks all three. Keep the skill's guidance in sync with the Cursor plugin's skills and rules — it is the same content restructured into ClawHub's single-file format. Publishing is a manual maintainer step; see [openclaw/README.md](./openclaw/README.md).
 
+## The MCP Registry entry
+
+[`server.json`](./server.json) is the server's listing in the [official MCP Registry](https://registry.modelcontextprotocol.io), published under the `com.ifttt` namespace. Changing the file does not change the listing — a maintainer has to republish, so bump `version` in the same PR as any change you want to go live. `node scripts/validate.mjs` checks the constraints that are easy to trip over, notably the registry's 100-character cap on `description`; `mcp-publisher validate` checks the file against the live schema.
+
+Publishing is a manual maintainer step. It authenticates by proving ownership of ifttt.com rather than through GitHub, which means signing a challenge with an Ed25519 private key — kept in 1Password (Engineering vault, "MCP Registry - ifttt.com DNS signing key"), deliberately not in this repo's CI, since this repository is public. Its public half is the `v=MCPv1` string in the ifttt.com apex TXT record, managed in `infra-misc`; rotating the key means updating both halves or publishing breaks. The item's notes carry the full sequence — in short, `mcp-publisher login dns --domain ifttt.com --private-key <key>` then `mcp-publisher publish` from the repo root.
+
 ## Validation
 
 ```
