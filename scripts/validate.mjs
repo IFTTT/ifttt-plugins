@@ -10,6 +10,32 @@ const warnings = [];
 
 const pluginNamePattern = /^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/;
 
+// Top-level fields accepted by Cursor's plugin manifest schema (cursor/plugins, schemas/plugin.schema.json).
+// That schema sets additionalProperties: false, so any other field fails marketplace ingestion.
+const cursorPluginManifestFields = new Set([
+  "name",
+  "displayName",
+  "description",
+  "version",
+  "minClientVersions",
+  "author",
+  "publisher",
+  "homepage",
+  "repository",
+  "license",
+  "logo",
+  "keywords",
+  "category",
+  "tags",
+  "commands",
+  "agents",
+  "skills",
+  "rules",
+  "hooks",
+  "variables",
+  "mcpServers",
+]);
+
 function addError(message) {
   errors.push(message);
 }
@@ -224,6 +250,12 @@ async function validatePlugin(pluginDir, dirName) {
     addError(`${dirName}: plugin.json name ("${manifest.name}") must match the plugin directory name.`);
   }
 
+  for (const field of Object.keys(manifest)) {
+    if (!cursorPluginManifestFields.has(field)) {
+      addError(`${dirName}: plugin.json field "${field}" is not in Cursor's plugin manifest schema, which rejects unknown fields.`);
+    }
+  }
+
   for (const field of ["displayName", "version", "description", "license"]) {
     if (typeof manifest[field] !== "string" || manifest[field].length === 0) {
       addError(`${dirName}: plugin.json is missing required field "${field}".`);
@@ -250,6 +282,79 @@ async function validatePlugin(pluginDir, dirName) {
 
   if (!(await pathExists(path.join(pluginDir, "README.md")))) {
     addWarning(`${dirName}: no README.md found.`);
+  }
+}
+
+// Cursor's ingester reads .cursor-plugin/marketplace.json at the repo root and only sees plugins listed there,
+// resolving each "source" to a directory that must contain .cursor-plugin/plugin.json.
+async function validateMarketplaceManifest(pluginDirNames) {
+  const marketplacePath = path.join(repoRoot, ".cursor-plugin", "marketplace.json");
+  const manifest = await readJsonFile(marketplacePath, "Cursor marketplace manifest");
+  if (!manifest) {
+    return;
+  }
+
+  if (typeof manifest.name !== "string" || manifest.name.length === 0) {
+    addError('marketplace.json is missing required field "name".');
+  }
+
+  if (!manifest.owner || typeof manifest.owner.name !== "string" || manifest.owner.name.length === 0) {
+    addError('marketplace.json "owner.name" is required.');
+  }
+
+  if (!Array.isArray(manifest.plugins) || manifest.plugins.length === 0) {
+    addError('marketplace.json "plugins" must be a non-empty array.');
+    return;
+  }
+
+  const listedNames = new Set();
+  const listedDirs = new Set();
+
+  for (const [index, entry] of manifest.plugins.entries()) {
+    const label = `marketplace.json plugins[${index}]`;
+    if (!entry || typeof entry !== "object") {
+      addError(`${label} must be an object with "name" and "source".`);
+      continue;
+    }
+
+    if (typeof entry.name !== "string" || !pluginNamePattern.test(entry.name)) {
+      addError(`${label}: "name" must be lowercase and use only alphanumerics, hyphens, and periods.`);
+    } else if (listedNames.has(entry.name)) {
+      addError(`${label}: duplicate plugin name "${entry.name}"; marketplace plugin names must be unique.`);
+    } else {
+      listedNames.add(entry.name);
+    }
+
+    if (
+      typeof entry.source !== "string" ||
+      entry.source.startsWith("http://") ||
+      entry.source.startsWith("https://") ||
+      !isSafeRelativePath(entry.source)
+    ) {
+      addError(`${label}: "source" must be a relative path to a plugin directory in this repo (got ${JSON.stringify(entry.source)}).`);
+      continue;
+    }
+
+    const sourceDir = path.resolve(repoRoot, entry.source);
+    const sourceManifestPath = path.join(sourceDir, ".cursor-plugin", "plugin.json");
+    if (!(await pathExists(sourceManifestPath))) {
+      addError(`${label}: "source" ("${entry.source}") does not contain .cursor-plugin/plugin.json.`);
+      continue;
+    }
+    listedDirs.add(path.relative(repoRoot, sourceDir).split(path.sep).join("/"));
+
+    const sourceManifest = await readJsonFile(sourceManifestPath, `${label} target plugin manifest`);
+    if (sourceManifest && sourceManifest.name !== entry.name) {
+      addError(
+        `${label}: name ("${entry.name}") must match the plugin.json name ("${sourceManifest.name}") in "${entry.source}".`,
+      );
+    }
+  }
+
+  for (const dirName of pluginDirNames) {
+    if (!listedDirs.has(`plugins/${dirName}`)) {
+      addError(`${dirName}: plugins/${dirName} is not listed in .cursor-plugin/marketplace.json, so Cursor will not ingest it.`);
+    }
   }
 }
 
@@ -360,6 +465,7 @@ async function main() {
     await validatePlugin(path.join(pluginsRoot, entry.name), entry.name);
   }
 
+  await validateMarketplaceManifest(pluginDirs.map((entry) => entry.name));
   await validateOpenclawSkills();
   await validateRegistryManifest();
 

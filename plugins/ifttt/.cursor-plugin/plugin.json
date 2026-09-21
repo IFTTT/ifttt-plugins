@@ -36,5 +36,5 @@
   "logo": "assets/logo.svg",
   "skills": "./skills/",
   "rules": "./rules/",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./mcp.json"
 }

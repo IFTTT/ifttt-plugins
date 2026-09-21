@@ -24,7 +24,7 @@ description: Set up and authenticate the IFTTT MCP connection, understand IFTTT 
 
 There are two separate layers of authentication. Do not confuse them.
 
-**Layer 1 — connecting the MCP server itself (Cursor-managed OAuth).** No IFTTT tool performs this login, and it cannot be fixed by editing `.mcp.json` or other config files — never attempt that. If IFTTT tools are unavailable or every call fails with an authentication error:
+**Layer 1 — connecting the MCP server itself (Cursor-managed OAuth).** No IFTTT tool performs this login, and it cannot be fixed by editing `mcp.json` or other config files — never attempt that. If IFTTT tools are unavailable or every call fails with an authentication error:
 
 1. If Cursor offers an authentication action for the `ifttt` server, trigger it once. The browser should open IFTTT's authorization page, where the user signs in (or creates a free account) and approves access.
 2. If the browser does not open or auth still fails, hand off to the user: "Open **Cursor Settings → Tools & MCP**, find the `ifttt` server, and click **Connect**. Sign in at ifttt.com and approve access." Then stop and wait for the user to confirm before retrying — do not investigate config files or retry in a loop.

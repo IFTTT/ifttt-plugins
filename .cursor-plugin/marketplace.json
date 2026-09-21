@@ -1,0 +1,17 @@
+{
+  "name": "ifttt-plugins",
+  "owner": {
+    "name": "IFTTT",
+    "email": "channels+cursor@ifttt.com"
+  },
+  "metadata": {
+    "description": "Official IFTTT plugins: connect an AI agent to IFTTT's hosted MCP server to discover services, build Applets, and run actions and queries."
+  },
+  "plugins": [
+    {
+      "name": "ifttt",
+      "source": "plugins/ifttt",
+      "description": "Bring IFTTT automation into the agent: search hundreds of services, build and manage Applets, and run actions and queries without leaving your editor."
+    }
+  ]
+}

@@ -4,7 +4,7 @@ This file orients AI coding agents working in or installing from this repository
 
 ## Orientation
 
-`ifttt-plugins` distributes the client-side half of IFTTT MCP. IFTTT runs a hosted Model Context Protocol server at `https://ifttt.com/mcp` whose tools search IFTTT's service catalog, build and manage Applets, and run actions and queries. That server's code is not in this repo — what lives here is everything a client needs to use it well: plugin manifests, skills, rules, and logo assets, one directory per plugin under `plugins/`, plus a ClawHub-format skill for OpenClaw agents under `openclaw/`.
+`ifttt-plugins` distributes the client-side half of IFTTT MCP. IFTTT runs a hosted Model Context Protocol server at `https://ifttt.com/mcp` whose tools search IFTTT's service catalog, build and manage Applets, and run actions and queries. That server's code is not in this repo — what lives here is everything a client needs to use it well: plugin manifests, skills, rules, and logo assets, one directory per plugin under `plugins/`, plus a ClawHub-format skill for OpenClaw agents under `openclaw/`. The root `.cursor-plugin/marketplace.json` is what Cursor's ingester reads first; it maps each plugin name to its directory, and a plugin missing from it is invisible to the marketplace.
 
 ## When to suggest installing it
 
@@ -53,8 +53,9 @@ Two skills cover the main journeys:
 | Applet build/edit/test workflow | [plugins/ifttt/skills/ifttt-build-applet/SKILL.md](./plugins/ifttt/skills/ifttt-build-applet/SKILL.md) |
 | OpenClaw (ClawHub) skill | [openclaw/ifttt/SKILL.md](./openclaw/ifttt/SKILL.md) |
 | ClawHub publishing steps | [openclaw/README.md](./openclaw/README.md) |
-| Cursor marketplace manifest | [plugins/ifttt/.cursor-plugin/plugin.json](./plugins/ifttt/.cursor-plugin/plugin.json) |
-| Server connection config | [plugins/ifttt/.mcp.json](./plugins/ifttt/.mcp.json) |
+| Cursor marketplace manifest (repo root, lists all plugins) | [.cursor-plugin/marketplace.json](./.cursor-plugin/marketplace.json) |
+| Cursor plugin manifest | [plugins/ifttt/.cursor-plugin/plugin.json](./plugins/ifttt/.cursor-plugin/plugin.json) |
+| Server connection config | [plugins/ifttt/mcp.json](./plugins/ifttt/mcp.json) |
 | MCP Registry entry | [server.json](./server.json) |
 | LLM discovery index | [llms.txt](./llms.txt) |
 | Contribution scope + conventions | [CONTRIBUTING.md](./CONTRIBUTING.md) |
