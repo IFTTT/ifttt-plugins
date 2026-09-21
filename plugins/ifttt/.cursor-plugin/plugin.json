@@ -1,7 +1,7 @@
 {
   "name": "ifttt",
   "displayName": "IFTTT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bring IFTTT automation into the agent: search hundreds of services, build and manage Applets, and run actions and queries without leaving your editor.",
   "author": {
     "name": "IFTTT",
