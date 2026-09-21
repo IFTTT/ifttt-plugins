@@ -10,8 +10,9 @@
 
 ## Manifests
 
-- [Cursor plugin manifest](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/.cursor-plugin/plugin.json): Listing metadata for Cursor's marketplace.
-- [MCP server config](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/.mcp.json): Plain `mcpServers` block any MCP client can reuse.
+- [Cursor marketplace manifest](https://github.com/IFTTT/ifttt-plugins/blob/main/.cursor-plugin/marketplace.json): Root index Cursor ingests first; lists every plugin in this repo with its directory.
+- [Cursor plugin manifest](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/.cursor-plugin/plugin.json): Listing metadata and component paths for the `ifttt` plugin.
+- [MCP server config](https://github.com/IFTTT/ifttt-plugins/blob/main/plugins/ifttt/mcp.json): Plain `mcpServers` block any MCP client can reuse.
 - [MCP Registry entry](https://github.com/IFTTT/ifttt-plugins/blob/main/server.json): `server.json` for the [official MCP Registry](https://registry.modelcontextprotocol.io).
 
 ## Agent guidance

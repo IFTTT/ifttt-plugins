@@ -31,7 +31,7 @@ Automate the services you use every day — Gmail, Google Sheets, Slack, Philips
 
 | Component | Purpose |
 |---|---|
-| MCP server config (`.mcp.json`) | Streamable HTTP connection to `https://ifttt.com/mcp` with OAuth |
+| MCP server config (`mcp.json`) | Streamable HTTP connection to `https://ifttt.com/mcp` with OAuth |
 | `ifttt-setup` skill | Authentication, IFTTT concepts, and tool overview |
 | `ifttt-build-applet` skill | Step-by-step Applet building, editing, and testing workflow |
 | `ifttt-lifecycle` rule | Safety rails: confirmation before destructive or side-effectful calls, no guessed identifiers, connection-error handling |

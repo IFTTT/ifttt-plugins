@@ -38,19 +38,22 @@ The first time the server is used, your browser opens IFTTT's sign-in page. A fr
 ## Repository layout
 
 ```
+.cursor-plugin/marketplace.json  Cursor marketplace manifest — lists every plugin under plugins/
 plugins/<name>/
-  .cursor-plugin/plugin.json   Cursor marketplace manifest
-  .mcp.json                    server connection (referenced from the manifest)
-  skills/                      workflows the agent can load (SKILL.md each)
-  rules/                       always-on guardrails (.mdc)
-  assets/                      logo and icon
-  README.md                    user-facing docs
+  .cursor-plugin/plugin.json     Cursor plugin manifest
+  mcp.json                       server connection (Cursor's default MCP config name)
+  skills/                        workflows the agent can load (SKILL.md each)
+  rules/                         always-on guardrails (.mdc)
+  assets/                        logo and icon
+  README.md                      user-facing docs
 openclaw/<name>/
-  SKILL.md                     ClawHub-format skill for OpenClaw agents
-server.json                    entry for the official MCP Registry
-llms.txt                       discovery index for LLM crawlers
-scripts/validate.mjs           structure checks (run in CI)
+  SKILL.md                       ClawHub-format skill for OpenClaw agents
+server.json                      entry for the official MCP Registry
+llms.txt                         discovery index for LLM crawlers
+scripts/validate.mjs             structure checks (run in CI)
 ```
+
+Cursor reads the root marketplace manifest first and ingests only the plugins it lists, so a new plugin needs an entry there as well as its own directory.
 
 ## Contributing
 

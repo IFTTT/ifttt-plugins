@@ -6,7 +6,7 @@ alwaysApply: true
 ifttt-lifecycle:
 
 - Never guess service slugs, trigger/action/query identifiers, or Applet slugs. Always discover them via `search_services`, `get_steps`, `my_applets`, or `get_applet` first.
-- If the IFTTT MCP server itself is unauthenticated (tools missing, or every call fails with an auth error), do not read or edit config files such as `.mcp.json` and do not retry in a loop. Direct the user to Cursor Settings → Tools & MCP → Connect next to `ifttt`, then wait for their confirmation before retrying.
+- If the IFTTT MCP server itself is unauthenticated (tools missing, or every call fails with an auth error), do not read or edit config files such as `mcp.json` and do not retry in a loop. Direct the user to Cursor Settings → Tools & MCP → Connect next to `ifttt`, then wait for their confirmation before retrying.
 - `create_applet` enables the Applet immediately. Summarize what the Applet will do (trigger, actions, and any queries or delay) and get the user's confirmation before creating it.
 - Confirm with the user before calling `remove_applet` (permanent) or `run_action` (performs the action for real — messages get sent, devices get switched).
 - Copy `step_template` from discovery results verbatim when building Applet configs; only fill in `account_id` and field values. Do not invent field names.

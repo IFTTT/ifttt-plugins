@@ -7,8 +7,10 @@ The MCP server itself is not developed here. Problems with tool behavior, the se
 ## Adding a plugin
 
 1. Create `plugins/<name>/` (lowercase kebab-case). Required: `.cursor-plugin/plugin.json` (its `name` must equal the directory name), `assets/logo.svg`, and a `README.md`.
-2. Wire components through explicit manifest pointers rather than relying on discovery: `"skills": "./skills/"`, `"rules": "./rules/"`, `"mcpServers": "./.mcp.json"`, `"logo": "assets/logo.svg"`.
-3. Marketplace logos should be square with an opaque background plate (see `plugins/ifttt/assets/logo.svg`).
+2. Register it in `.cursor-plugin/marketplace.json` at the repo root. Cursor reads that file first and ingests only the plugins it lists; each entry needs `name` (equal to the manifest's `name`), `source` (`plugins/<name>`), and a one-line `description`.
+3. Wire components through explicit manifest pointers rather than relying on discovery: `"skills": "./skills/"`, `"rules": "./rules/"`, `"mcpServers": "./mcp.json"`, `"logo": "assets/logo.svg"`. Name the MCP config `mcp.json` — that is the file Cursor discovers by default, and it keeps the plugin compatible with the [Agent Plugins](https://agent-plugins.org) layout.
+4. Stick to the fields in Cursor's plugin manifest schema (`cursor/plugins`, `schemas/plugin.schema.json`). The schema rejects unknown fields, and so does the validator.
+5. Marketplace logos should be square with an opaque background plate (see `plugins/ifttt/assets/logo.svg`).
 
 ## The OpenClaw skill
 
@@ -26,7 +28,7 @@ Publishing is a manual maintainer step. It authenticates by proving ownership of
 node scripts/validate.mjs
 ```
 
-CI runs this on every push and PR. It checks manifest fields, referenced paths, and skill/rule frontmatter.
+CI runs this on every push and PR. It checks the root marketplace manifest (every `plugins/<name>/` is listed, names are unique and match each plugin's manifest, each `source` resolves to a directory with `.cursor-plugin/plugin.json`), plugin manifest fields, referenced paths, and skill/rule frontmatter.
 
 ## Local testing in Cursor
 
